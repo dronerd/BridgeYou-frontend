@@ -72,6 +72,22 @@ function App() {
 
   return (
     <div className="app-root">
+      <div className="top-language-bar">
+        <label className="top-language-label">{translations[lang].languageLabel}:</label>
+        <div className="top-language-flags">
+          {languageOptions.map((opt) => (
+            <button
+              key={opt.code}
+              className={"lang-flag " + (lang === opt.code ? "active" : "")}
+              onClick={() => setLang(opt.code as any)}
+              aria-label={opt.label}
+            >
+              <span className="flag-emoji">{flagByLang[opt.code] || "🏳️"}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="app-card">
         <header className="app-header">
           <div>
@@ -82,24 +98,12 @@ function App() {
 
         <div className="steps">
           <ol>
-            <li>{translations[lang].step1}</li>
             <li>{translations[lang].step2}</li>
             <li>{translations[lang].step3}</li>
           </ol>
         </div>
 
         <div className="lang-row">
-          <div className="lang-column">
-            <label style={{ display: "block", marginBottom: 6 }}>{translations[lang].uiLanguageLabel}</label>
-            <select value={lang} onChange={(e) => setLang(e.target.value as any)}>
-              {languageOptions.map((opt) => (
-                <option key={opt.code} value={opt.code}>
-                  {flagByLang[opt.code]} {languageNames[lang][opt.code]}
-                </option>
-              ))}
-            </select>
-          </div>
-
           <div className="lang-column">
             <label style={{ display: "block", marginBottom: 6 }}>{translations[lang].targetLanguageLabel}</label>
             <select value={targetLang} onChange={(e) => setTargetLang(e.target.value as any)}>
